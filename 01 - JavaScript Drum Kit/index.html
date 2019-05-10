@@ -72,7 +72,6 @@
       let div = document.querySelector(`div[data-key="${keyCode}"]`);
       if (!div) return;
       div.classList.add(`playing`);
-      setTimeout(() => div.classList.remove(`playing`), 100)
     };
     // keydown event listener
     document.addEventListener(`keydown`, (e) => {
@@ -87,9 +86,18 @@
         let key = div.attributes[0].value;
         playAudio(key);
         div.classList.add(`playing`);
-        setTimeout(() => div.classList.remove(`playing`), 100);
+      });
+    });
+
+    // transition end
+    // reverse 'animation' after completing transition
+    divs.forEach((div) => {
+      div.addEventListener(`transitionend`, (e) => {
+        if (e.propertyName === 'transform') {
+          div.classList.remove(`playing`);
+        }
       })
-    })
+    });
   </script>
 
 
