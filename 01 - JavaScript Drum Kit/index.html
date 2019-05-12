@@ -83,7 +83,7 @@
     const divs = document.querySelectorAll(`div.key`);
     divs.forEach((div) => {
       div.addEventListener(`click`, () => {
-        let key = div.attributes[0].value;
+        let key = div.dataset.key;
         playAudio(key);
         div.classList.add(`playing`);
       });
