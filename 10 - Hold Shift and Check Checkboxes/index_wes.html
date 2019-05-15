@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--
+  Solution from following video
+-->
+
 <head>
   <meta charset="UTF-8">
   <title>Hold Shift to Check Multiple Checkboxes</title>
@@ -97,29 +101,30 @@
   </div>
 
   <script>
-    let lastChecked = null;
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    // console.dir(checkboxes[0]);
 
-    checkboxes.forEach((checkbox, index) => {
-      checkbox.addEventListener('click', (e) => {
-        if (e.shiftKey) {
-          if (lastChecked) {
-            if (lastChecked < index) {
-              for (let i = lastChecked; i <= index; i++) {
-                checkboxes[i].checked = true;
-              }
-            }
-            else {
-              for (let i = lastChecked; i >= index; i--) {
-                checkboxes[i].checked = true;
-              }
-            }
+    let lastChecked;
+
+    function handleCheck(e) {
+      // check if shift is key down
+      // AND if checking not unchecking
+      let inBetween = false;
+      if (e.shiftKey && this.checked) {
+        // loop over every checkbox
+        checkboxes.forEach(checkbox => {
+          if (checkbox === this || checkbox === lastChecked) {
+            inBetween = !inBetween;
           }
-        }
-        lastChecked = index;
-      });
-    });
+
+          if (inBetween) {
+            checkbox.checked = true;
+          }
+        });
+      }
+      lastChecked = this;
+    }
+
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
   </script>
 </body>
 
