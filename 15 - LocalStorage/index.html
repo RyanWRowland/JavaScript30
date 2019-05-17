@@ -39,11 +39,13 @@
     <form class="add-items">
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
+      <input type="button" value="Clear" />
     </form>
   </div>
 
   <script>
     const addItems = document.querySelector('.add-items');
+    const clearButton = addItems.querySelector('[type="button"]');
     const itemsList = document.querySelector('.plates');
     const items = JSON.parse(localStorage.getItem('items')) || [];
 
@@ -82,8 +84,15 @@
       // populateList(items, itemsList);
     }
 
+    function clear() {
+      items.splice(0);
+      populateList(items, itemsList);
+      localStorage.setItem('items', JSON.stringify(items));
+    }
+
     addItems.addEventListener('submit', addItem);
     itemsList.addEventListener('click', toggleDone);
+    clearButton.addEventListener('click', clear);
 
     populateList(items, itemsList);
   </script>
