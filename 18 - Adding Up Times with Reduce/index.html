@@ -184,17 +184,26 @@
     </li>
   </ul>
   <script>
+    // querySelectorAll returns a node list that we must convert into a JavaScript array
+    // this way we can use methods such as reduce
     const videos = [...document.querySelectorAll('[data-time]')];
+
+    // adding up time in seconds
     const totalSeconds = videos.reduce((acc, current) => {
+      // data-time property is a string in this case
       const [minutes, seconds] = current.dataset.time.split(':');
       return acc + (parseInt(minutes) * 60 + parseInt(seconds));
     }, 0);
 
+    // convert totalSeconds into hours:minutes:seconds format
     function timify(totalSeconds) {
-      let minutes = Math.floor(totalSeconds / 60);
-      let seconds = totalSeconds % 60;
-      let hours = Math.floor(minutes / 60);
-      minutes = minutes % 60;
+      const hours = Math.floor(totalSeconds / 60 / 60);
+      const minutes = Math.floor(totalSeconds / 60) % 60;
+      const seconds = totalSeconds % 60;
+      // let minutes = Math.floor(totalSeconds / 60);
+      // let seconds = totalSeconds % 60;
+      // let hours = Math.floor(minutes / 60);
+      // minutes = minutes % 60;
 
       return `${hours}:${minutes}:${seconds}`;
     };
