@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Videos</title>
 </head>
+
 <body>
   <ul class="videos">
     <li data-time="5:43">
@@ -181,7 +183,24 @@
       Video 58
     </li>
   </ul>
-<script>
-</script>
+  <script>
+    const videos = [...document.querySelectorAll('[data-time]')];
+    const totalSeconds = videos.reduce((acc, current) => {
+      const [minutes, seconds] = current.dataset.time.split(':');
+      return acc + (parseInt(minutes) * 60 + parseInt(seconds));
+    }, 0);
+
+    function timify(totalSeconds) {
+      let minutes = Math.floor(totalSeconds / 60);
+      let seconds = totalSeconds % 60;
+      let hours = Math.floor(minutes / 60);
+      minutes = minutes % 60;
+
+      return `${hours}:${minutes}:${seconds}`;
+    };
+
+    console.log(timify(totalSeconds));
+  </script>
 </body>
+
 </html>
