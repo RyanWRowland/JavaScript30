@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
 </head>
+
 <body>
 
   <style>
@@ -26,12 +28,12 @@
       padding: 0;
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
     }
-    
+
     #bands li {
       border-bottom: 1px solid #efefef;
       padding: 20px;
     }
-    
+
     #bands li:last-child {
       border-bottom: 0;
     }
@@ -40,16 +42,45 @@
       color: #ffc600;
       text-decoration: none;
     }
-
   </style>
 
   <ul id="bands"></ul>
 
-<script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  <script>
+    const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
 
+    function articleless(band) {
+      const words = band.split(' ');
 
-</script>
+      if (words[0] === 'The' || words[0] === 'A' || words[0] === 'An') {
+        return words.slice(1).join(' ');
+      }
+      else {
+        return band;
+      }
+    }
+
+    bands.sort((a, b) => {
+      let bandA = articleless(a);
+      let bandB = articleless(b);
+      if (bandA < bandB) {
+        return -1;
+      }
+      if (bandA > bandB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    const ul = document.querySelector('#bands');
+    bands.forEach(band => {
+      let li = document.createElement("li");
+      li.textContent = band;
+      ul.append(li);
+    });
+
+  </script>
 
 </body>
+
 </html>
